@@ -8,11 +8,16 @@ class ReducerManager {
   constructor(reducers: ReducersMapObject = {}) {
     this.reducer         = {...reducers};
     this.combineReducers = combineReducers(this.reducer);
+
+    this.add = this.add.bind(this);
+    this.getReducerMap = this.getReducerMap.bind(this);
+    this.reduce = this.reduce.bind(this);
+    this.remove = this.remove.bind(this);
   }
 
   add(key: string, reducer: Reducer, force?: boolean): Reducer<CombinedState<unknown>> {
     if ((key && !this.reducer.hasOwnProperty(key)) || force) {
-      this.reducer[key]    = reducer;
+      this.reducer[key]   = reducer;
       this.combineReducers = combineReducers(this.reducer);
     }
 
@@ -25,7 +30,7 @@ class ReducerManager {
 
   reduce(state: CombinedState<{}> | undefined, action: AnyAction): CombinedState<{}> {
     const newState = {...state};
-console.log(this, this.keysToRemove);
+
     if (this.keysToRemove.length > 0) {
       for (let key of this.keysToRemove) {
         delete newState[key];
