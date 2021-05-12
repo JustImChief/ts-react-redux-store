@@ -3,8 +3,8 @@
   "version": "1.0.1",
   "description": "React redux store",
   "main": "src/index.ts",
-  "module": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "module": "lib-esm/index.js",
+  "types": "lib-esm/index.d.ts",
   "files": [
     "_bundles",
     "lib",
