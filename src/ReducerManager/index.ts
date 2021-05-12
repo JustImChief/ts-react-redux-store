@@ -25,7 +25,7 @@ class ReducerManager {
 
   reduce(state: CombinedState<{}> | undefined, action: AnyAction): CombinedState<{}> {
     const newState = {...state};
-
+console.log(this, this.keysToRemove);
     if (this.keysToRemove.length > 0) {
       for (let key of this.keysToRemove) {
         delete newState[key];
