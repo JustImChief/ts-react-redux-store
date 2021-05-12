@@ -1,7 +1,7 @@
 {
-  "name": "ts-data-transformer",
+  "name": "ts-react-redux-store",
   "version": "1.0.0",
-  "description": "Data transformer",
+  "description": "React redux store",
   "main": "src/index.ts",
   "module": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -17,20 +17,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JustImChief/ts-data-transformer.git"
+    "url": "git+https://github.com/JustImChief/ts-react-redux-store.git"
   },
   "keywords": [
     "typescript",
     "javascript",
-    "data transformer",
-    "es6"
+    "react",
+    "redux",
+    "store"
   ],
   "author": "JustImChief",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JustImChief/ts-data-transformer/issues"
+    "url": "https://github.com/JustImChief/ts-react-redux-store/issues"
   },
-  "homepage": "https://github.com/JustImChief/ts-data-transformer#readme",
+  "homepage": "https://github.com/JustImChief/ts-react-redux-store#readme",
   "dependencies": {
     "react-redux": "^7.2.4",
     "redux": "^4.1.0",
