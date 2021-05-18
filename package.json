@@ -35,6 +35,7 @@
   "dependencies": {
     "react-redux": "^7.2.4",
     "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
     "redux-form": "^8.3.7",
     "redux-thunk": "^2.3.0",
     "ts-data-transformer": "^1.0.1",
@@ -47,7 +48,6 @@
     "@types/redux-thunk": "^2.1.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "redux-devtools-extension": "^2.13.9",
     "shx": "^0.3.3",
     "ts-loader": "^9.1.1",
     "typescript": "^4.2.4",
