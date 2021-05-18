@@ -40,7 +40,6 @@ declare class Reducer {
         isDecimal: typeof import("ts-data-validator/lib/isDecimal").default;
         isEvent: typeof import("ts-data-validator/lib/isEvent").default;
         isFile: typeof import("ts-data-validator/lib/isFile").default;
-        isFormData: typeof import("ts-data-validator/lib/isFormData").default;
         isFunction: typeof import("ts-data-validator/lib/isFunction").default;
         isInteger: typeof import("ts-data-validator/lib/isInteger").default;
         isJSON: typeof import("ts-data-validator/lib/isJSON").default;
@@ -79,9 +78,6 @@ declare class Reducer {
     } | string;
     protected failure(state: CombinedState<{}>, action: AnyAction, wait?: boolean): CombinedState<{}>;
     protected request(state: CombinedState<{}>, action: AnyAction, wait?: boolean): CombinedState<{}>;
-    ssr(initialState?: {
-        [p: string]: any;
-    }): ReduxReducer;
     protected success(state: CombinedState<{}>, action: AnyAction, wait?: boolean): CombinedState<{}>;
 }
 export default Reducer;

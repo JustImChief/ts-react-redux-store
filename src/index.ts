@@ -16,6 +16,12 @@ class ReduxStore {
   storage: Store;
 
   constructor() {
+    this.connectReducers   = this.connectReducers.bind(this);
+    this.getState          = this.getState.bind(this);
+    this.registerReducer   = this.registerReducer.bind(this);
+    this.ssr               = this.ssr.bind(this);
+    this.unregisterReducer = this.unregisterReducer.bind(this);
+
     this.reducerManager = new ReducerManager({form});
     this.store          = createStore(this.reducerManager.reduce, this.middleware);
   }

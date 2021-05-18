@@ -39,6 +39,14 @@ class Reducer {
     this.initialData   = initialState?.data || {};
     this.initialValues = initialState?.values || {};
 
+    this.init          = this.init.bind(this);
+    this.reducer       = this.reducer.bind(this);
+    this.prepareValues = this.prepareValues.bind(this);
+    this.getValue      = this.getValue.bind(this);
+    this.failure       = this.failure.bind(this);
+    this.request       = this.request.bind(this);
+    this.success       = this.success.bind(this);
+
     this.initialState = {
       ...this.initialState,
       data:   this.prepareValues(this.initialData),
@@ -132,15 +140,6 @@ class Reducer {
       [wait ? 'wait' : 'loading']: true,
     };
   }
-
-  ssr(initialState: {[p: string]: any} = {}): ReduxReducer {
-  this.initialState = {
-    ...this.initialState,
-    ...initialState,
-  };
-
-  return this.init();
-}
 
   protected success(state: CombinedState<{}>, action: AnyAction, wait = false): CombinedState<{}> {
     return {

@@ -9,6 +9,11 @@ class ReducerManager {
     this.reducer         = {...reducers};
     this.combineReducers = combineReducers(this.reducer);
     this.keysToRemove    = [];
+
+    this.add           = this.add.bind(this);
+    this.getReducerMap = this.getReducerMap.bind(this);
+    this.reduce        = this.reduce.bind(this);
+    this.remove        = this.remove.bind(this);
   }
 
   add(key: string, reducer: Reducer): Reducer<CombinedState<unknown>> {

@@ -16,6 +16,10 @@ var ReducerManager = /** @class */ (function () {
         this.reducer = __assign({}, reducers);
         this.combineReducers = combineReducers(this.reducer);
         this.keysToRemove = [];
+        this.add = this.add.bind(this);
+        this.getReducerMap = this.getReducerMap.bind(this);
+        this.reduce = this.reduce.bind(this);
+        this.remove = this.remove.bind(this);
     }
     ReducerManager.prototype.add = function (key, reducer) {
         if ((key && !this.reducer.hasOwnProperty(key))) {

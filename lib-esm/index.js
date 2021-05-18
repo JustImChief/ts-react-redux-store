@@ -22,6 +22,11 @@ var ReduxStore = /** @class */ (function () {
         this.middleware = process.env.NODE_ENV === 'production'
             ? applyMiddleware(thunkMiddleware)
             : composeWithDevTools(applyMiddleware(thunkMiddleware));
+        this.connectReducers = this.connectReducers.bind(this);
+        this.getState = this.getState.bind(this);
+        this.registerReducer = this.registerReducer.bind(this);
+        this.ssr = this.ssr.bind(this);
+        this.unregisterReducer = this.unregisterReducer.bind(this);
         this.reducerManager = new ReducerManager({ form: form });
         this.store = createStore(this.reducerManager.reduce, this.middleware);
     }
