@@ -70,7 +70,7 @@ class Reducer {
     };
   }
 
-  protected prepareValues(initial: {[p: string]: any}, values?: {[p: string]: any}): {[p: string]: any} {
+  protected prepareValues(initial: {[p: string]: any}, values: {[p: string]: any} = {}): {[p: string]: any} {
     return Object.keys(initial).reduce((accumulator, currentValue) => ({
       ...accumulator,
       [currentValue]: this.getValue(initial[currentValue], values[currentValue]),

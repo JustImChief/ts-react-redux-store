@@ -65,6 +65,7 @@ var Reducer = /** @class */ (function () {
     };
     Reducer.prototype.prepareValues = function (initial, values) {
         var _this = this;
+        if (values === void 0) { values = {}; }
         return Object.keys(initial).reduce(function (accumulator, currentValue) {
             var _a;
             return (__assign(__assign({}, accumulator), (_a = {}, _a[currentValue] = _this.getValue(initial[currentValue], values[currentValue]), _a)));
