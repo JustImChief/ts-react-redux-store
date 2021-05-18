@@ -6,8 +6,17 @@ declare const types: {
     object: string;
     string: string;
 };
-declare abstract class Reducer {
+declare class Reducer {
     static _name: string;
+    static get initialState(): InitialStateType & {
+        initialStateLoaded?: boolean;
+        loading?: boolean;
+        wait?: boolean;
+    } & {
+        initialStateLoaded?: boolean;
+        loading?: boolean;
+        wait?: boolean;
+    };
     actions: {
         [p: string]: (state: CombinedState<{}>, action: AnyAction) => CombinedState<{}>;
     };

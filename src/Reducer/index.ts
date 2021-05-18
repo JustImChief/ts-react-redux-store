@@ -10,8 +10,12 @@ const types = {
   string: 'string',
 };
 
-abstract class Reducer {
+class Reducer {
   static _name = 'abstract';
+
+  static get initialState() {
+    return new Reducer().initialState;
+  }
 
   actions: {[p: string]: (state: CombinedState<{}>, action: AnyAction) => CombinedState<{}>} = {};
 

@@ -1,23 +1,19 @@
 import { AnyAction, CombinedState, combineReducers, Reducer, ReducersMapObject } from 'redux';
 
 class ReducerManager {
-  private readonly reducer: ReducersMapObject = {};
+  private readonly reducer: ReducersMapObject;
   private combineReducers: Reducer<CombinedState<unknown>>;
-  private keysToRemove: string[]              = [];
+  private keysToRemove: string[];
 
   constructor(reducers: ReducersMapObject = {}) {
     this.reducer         = {...reducers};
     this.combineReducers = combineReducers(this.reducer);
-
-    this.add = this.add.bind(this);
-    this.getReducerMap = this.getReducerMap.bind(this);
-    this.reduce = this.reduce.bind(this);
-    this.remove = this.remove.bind(this);
+    this.keysToRemove    = [];
   }
 
-  add(key: string, reducer: Reducer, force?: boolean): Reducer<CombinedState<unknown>> {
-    if ((key && !this.reducer.hasOwnProperty(key)) || force) {
-      this.reducer[key]   = reducer;
+  add(key: string, reducer: Reducer): Reducer<CombinedState<unknown>> {
+    if ((key && !this.reducer.hasOwnProperty(key))) {
+      this.reducer[key]    = reducer;
       this.combineReducers = combineReducers(this.reducer);
     }
 

@@ -13,17 +13,12 @@ import { combineReducers } from 'redux';
 var ReducerManager = /** @class */ (function () {
     function ReducerManager(reducers) {
         if (reducers === void 0) { reducers = {}; }
-        this.reducer = {};
-        this.keysToRemove = [];
         this.reducer = __assign({}, reducers);
         this.combineReducers = combineReducers(this.reducer);
-        this.add = this.add.bind(this);
-        this.getReducerMap = this.getReducerMap.bind(this);
-        this.reduce = this.reduce.bind(this);
-        this.remove = this.remove.bind(this);
+        this.keysToRemove = [];
     }
-    ReducerManager.prototype.add = function (key, reducer, force) {
-        if ((key && !this.reducer.hasOwnProperty(key)) || force) {
+    ReducerManager.prototype.add = function (key, reducer) {
+        if ((key && !this.reducer.hasOwnProperty(key))) {
             this.reducer[key] = reducer;
             this.combineReducers = combineReducers(this.reducer);
         }
