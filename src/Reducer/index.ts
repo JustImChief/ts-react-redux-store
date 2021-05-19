@@ -45,6 +45,7 @@ class Reducer {
     this.getValue      = this.getValue.bind(this);
     this.failure       = this.failure.bind(this);
     this.request       = this.request.bind(this);
+    this.ssrInit       = this.ssrInit.bind(this);
     this.success       = this.success.bind(this);
 
     this.initialState = {
@@ -139,6 +140,15 @@ class Reducer {
       ...state,
       [wait ? 'wait' : 'loading']: true,
     };
+  }
+
+  ssrInit(initial: {[p: string]: any} = {}): ReduxReducer {
+    this.initialState = {
+      ...this.initialState,
+      ...initial,
+    };
+
+    return this.init();
   }
 
   protected success(state: CombinedState<{}>, action: AnyAction, wait = false): CombinedState<{}> {

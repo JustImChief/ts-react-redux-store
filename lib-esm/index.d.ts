@@ -1,14 +1,10 @@
 import { Store } from 'redux';
 import { default as Reducer, types } from './Reducer';
-declare let store: Store<any, import("redux").AnyAction>;
-declare let connectReducers: (...reducersOrFormName: any[]) => import("react-redux").InferableComponentEnhancerWithProps<any, {}>;
-declare let dispatch: import("redux").Dispatch<import("redux").AnyAction>;
-declare let getState: (reducer: any) => {
+declare const connectReducers: (...reducersOrFormName: any[]) => import("react-redux").InferableComponentEnhancerWithProps<any, {}>, dispatch: import("redux").Dispatch<import("redux").AnyAction>, getState: (reducer: any) => {
     [p: string]: any;
-};
-declare let registerReducer: (Reducer: any) => void;
-declare let unregisterReducer: (Reducer: any) => void;
-export declare const ssr: (data: any[]) => void;
+}, registerReducer: (Reducer: any) => void, ssr: (Reducer: any, initial?: {
+    [p: string]: any;
+}) => void, store: Store<any, import("redux").AnyAction>, unregisterReducer: (Reducer: any) => void;
 export default store;
-export { connectReducers, dispatch, getState, registerReducer, unregisterReducer };
+export { connectReducers, dispatch, getState, registerReducer, ssr, unregisterReducer };
 export { Reducer, types };
