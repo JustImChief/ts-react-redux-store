@@ -78,9 +78,7 @@ declare class Reducer {
     } | string;
     protected failure(state: CombinedState<{}>, action: AnyAction, wait?: boolean): CombinedState<{}>;
     protected request(state: CombinedState<{}>, action: AnyAction, wait?: boolean): CombinedState<{}>;
-    ssrInit(initial?: {
-        [p: string]: any;
-    }): ReduxReducer;
+    ssrInit(state: CombinedState<{}>, action: AnyAction): CombinedState<{}>;
     protected success(state: CombinedState<{}>, action: AnyAction, wait?: boolean): CombinedState<{}>;
 }
 export default Reducer;

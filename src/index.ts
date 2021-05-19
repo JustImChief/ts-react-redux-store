@@ -79,12 +79,15 @@ class ReduxStore {
     return state[reducer] || {};
   }
 
-  registerReducer(Reducer) {
-    this.store.replaceReducer(this.reducerManager.add(Reducer._name, new Reducer().init(), true));
+  registerReducer(Reducer): this {
+    this.store.replaceReducer(this.reducerManager.add(Reducer._name, new Reducer().init()));
+
+    return this;
   }
 
   ssr(Reducer, initial: {[p: string]: any} = {}) {
-    this.store.replaceReducer(this.reducerManager.add(Reducer._name, new Reducer().ssrInit(initial)));
+    this.registerReducer(Reducer)
+      .dispatch({type: `@${Reducer._name}/SSR_INITIALIZE`, ...initial});
   }
 
   unregisterReducer(Reducer) {

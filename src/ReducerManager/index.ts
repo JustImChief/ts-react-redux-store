@@ -16,8 +16,8 @@ class ReducerManager {
     this.remove        = this.remove.bind(this);
   }
 
-  add(key: string, reducer: Reducer, force = false): Reducer<CombinedState<unknown>> {
-    if (((key && !this.reducer.hasOwnProperty(key))) || force) {
+  add(key: string, reducer: Reducer): Reducer<CombinedState<unknown>> {
+    if (((key && !this.reducer.hasOwnProperty(key)))) {
       this.reducer[key]    = reducer;
       this.combineReducers = combineReducers(this.reducer);
     }

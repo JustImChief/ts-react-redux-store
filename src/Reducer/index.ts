@@ -17,7 +17,7 @@ class Reducer {
     return new Reducer().initialState;
   }
 
-  actions: {[p: string]: (state: CombinedState<{}>, action: AnyAction) => CombinedState<{}>} = {};
+  actions: {[p: string]: (state: CombinedState<{}>, action: AnyAction) => CombinedState<{}>};
 
   DT = DataTransformer;
   DV = DataValidator;
@@ -36,6 +36,10 @@ class Reducer {
   };
 
   protected constructor(initialState: InitialStateType = {}) {
+    this.actions = {
+      [`@${Reducer._name}/SSR_INITIALIZE`]: this.ssrInit.bind(this),
+    };
+
     this.initialData   = initialState?.data || {};
     this.initialValues = initialState?.values || {};
 
@@ -142,13 +146,13 @@ class Reducer {
     };
   }
 
-  ssrInit(initial: {[p: string]: any} = {}): ReduxReducer {
-    this.initialState = {
-      ...this.initialState,
-      ...initial,
-    };
+  ssrInit(state: CombinedState<{}>, action: AnyAction): CombinedState<{}> {
+    const {type, ...ssr} = action;
 
-    return this.init();
+    return {
+      ...state,
+      ...ssr,
+    };
   }
 
   protected success(state: CombinedState<{}>, action: AnyAction, wait = false): CombinedState<{}> {
