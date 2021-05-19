@@ -4,7 +4,7 @@ declare class ReducerManager {
     private combineReducers;
     private keysToRemove;
     constructor(reducers?: ReducersMapObject);
-    add(key: string, reducer: Reducer): Reducer<CombinedState<unknown>>;
+    add(key: string, reducer: Reducer, force?: boolean): Reducer<CombinedState<unknown>>;
     getReducerMap(): ReducersMapObject;
     reduce(state: CombinedState<{}> | undefined, action: AnyAction): CombinedState<{}>;
     remove(key: string): Reducer<CombinedState<unknown>>;

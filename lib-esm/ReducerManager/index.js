@@ -21,8 +21,9 @@ var ReducerManager = /** @class */ (function () {
         this.reduce = this.reduce.bind(this);
         this.remove = this.remove.bind(this);
     }
-    ReducerManager.prototype.add = function (key, reducer) {
-        if ((key && !this.reducer.hasOwnProperty(key))) {
+    ReducerManager.prototype.add = function (key, reducer, force) {
+        if (force === void 0) { force = false; }
+        if (((key && !this.reducer.hasOwnProperty(key))) || force) {
             this.reducer[key] = reducer;
             this.combineReducers = combineReducers(this.reducer);
         }

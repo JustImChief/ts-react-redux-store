@@ -80,7 +80,7 @@ class ReduxStore {
   }
 
   registerReducer(Reducer) {
-    this.store.replaceReducer(this.reducerManager.add(Reducer._name, new Reducer().init()));
+    this.store.replaceReducer(this.reducerManager.add(Reducer._name, new Reducer().init(), true));
   }
 
   ssr(Reducer, initial: {[p: string]: any} = {}) {
