@@ -11,15 +11,17 @@ const types = {
 };
 
 class Reducer {
-  name = 'abstract';
+  static _name: string;
 
-  static get _name() {
-    return new Reducer().name;
+  private static get reducerName() {
+    return this._name;
   }
 
   static get initialState() {
     return new Reducer().initialState;
   }
+
+  name = 'abstract';
 
   actions: {[p: string]: (state: CombinedState<{}>, action: AnyAction) => CombinedState<{}>};
 
@@ -41,7 +43,7 @@ class Reducer {
 
   protected constructor(initialState: InitialStateType = {}) {
     this.actions = {
-      [`@${Reducer._name}/SSR_INITIALIZE`]: this.ssrInit.bind(this),
+      [`@@SSR/${Reducer.reducerName}`]: this.ssrInit.bind(this),
     };
 
     this.initialData   = initialState?.data || {};
