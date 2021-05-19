@@ -42,8 +42,9 @@ var Reducer = /** @class */ (function () {
             loading: false,
             wait: false,
         };
+        var reducer = this.constructor;
         this.actions = (_a = {},
-            _a["@@SSR/" + this.constructor['_name']] = this.ssrInit.bind(this),
+            _a["@@SSR/" + reducer._name] = this.ssrInit.bind(this),
             _a);
         this.initialData = (initialState === null || initialState === void 0 ? void 0 : initialState.data) || {};
         this.initialValues = (initialState === null || initialState === void 0 ? void 0 : initialState.values) || {};

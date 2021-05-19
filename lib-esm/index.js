@@ -94,7 +94,7 @@ var ReduxStore = /** @class */ (function () {
     ReduxStore.prototype.ssr = function (Reducer, initial) {
         if (initial === void 0) { initial = {}; }
         this.registerReducer(Reducer);
-        this.dispatch(__assign({ type: "@" + Reducer._name + "/SSR_INITIALIZE" }, initial));
+        this.dispatch(__assign({ type: "@@SSR/" + Reducer._name }, initial));
     };
     ReduxStore.prototype.unregisterReducer = function (Reducer) {
         this.store.replaceReducer(this.reducerManager.remove(isString(Reducer) ? Reducer : Reducer._name));

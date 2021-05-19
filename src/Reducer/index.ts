@@ -36,8 +36,10 @@ class Reducer {
   };
 
   protected constructor(initialState: InitialStateType = {}) {
+    const reducer = this.constructor as typeof Reducer;
+
     this.actions = {
-      [`@@SSR/${this.constructor['_name']}`]: this.ssrInit.bind(this),
+      [`@@SSR/${reducer._name}`]: this.ssrInit.bind(this),
     };
 
     this.initialData   = initialState?.data || {};

@@ -85,7 +85,7 @@ class ReduxStore {
 
   ssr(Reducer, initial: {[p: string]: any} = {}) {
     this.registerReducer(Reducer);
-    this.dispatch({type: `@${Reducer._name}/SSR_INITIALIZE`, ...initial});
+    this.dispatch({type: `@@SSR/${Reducer._name}`, ...initial});
   }
 
   unregisterReducer(Reducer) {
