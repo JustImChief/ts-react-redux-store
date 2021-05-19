@@ -18,17 +18,31 @@ import { isFunction, isString } from 'ts-data-validator';
 import ReducerManager from './ReducerManager';
 import { default as Reducer, types } from './Reducer';
 var ReduxStore = /** @class */ (function () {
-    function ReduxStore() {
+    function ReduxStore(data) {
+        if (data === void 0) { data = []; }
         this.middleware = process.env.NODE_ENV === 'production'
             ? applyMiddleware(thunkMiddleware)
             : composeWithDevTools(applyMiddleware(thunkMiddleware));
         this.connectReducers = this.connectReducers.bind(this);
         this.getState = this.getState.bind(this);
         this.registerReducer = this.registerReducer.bind(this);
-        this.ssr = this.ssr.bind(this);
         this.unregisterReducer = this.unregisterReducer.bind(this);
-        this.reducerManager = new ReducerManager({ form: form });
-        this.store = createStore(this.reducerManager.reduce, this.middleware);
+        if (data.length > 0) {
+            var _a = data.reduce(function (accumulator, currentValue) {
+                var _a, _b;
+                var Reducer = currentValue[0], initial = currentValue[1];
+                return {
+                    reducers: __assign(__assign({}, accumulator.reducers), (_a = {}, _a[Reducer._name] = new Reducer().init(), _a)),
+                    initialState: __assign(__assign({}, accumulator.initialState), (_b = {}, _b[Reducer._name] = initial, _b)),
+                };
+            }, { reducers: {}, initialState: {} }), reducers = _a.reducers, initialState = _a.initialState;
+            this.reducerManager = new ReducerManager(__assign({ form: form }, reducers));
+            this.store = createStore(this.reducerManager.reduce, initialState, this.middleware);
+        }
+        else {
+            this.reducerManager = new ReducerManager({ form: form });
+            this.store = createStore(this.reducerManager.reduce, this.middleware);
+        }
     }
     Object.defineProperty(ReduxStore.prototype, "dispatch", {
         get: function () {
@@ -91,19 +105,6 @@ var ReduxStore = /** @class */ (function () {
     ReduxStore.prototype.registerReducer = function (Reducer) {
         this.store.replaceReducer(this.reducerManager.add(Reducer._name, new Reducer().init()));
     };
-    ReduxStore.prototype.ssr = function (data) {
-        var _a = data.reduce(function (accumulator, currentValue) {
-            var _a, _b;
-            var Reducer = currentValue[0], initial = currentValue[1];
-            return {
-                reducers: __assign(__assign({}, accumulator.reducers), (_a = {}, _a[Reducer._name] = new Reducer().init(), _a)),
-                initialState: __assign(__assign({}, accumulator.initialState), (_b = {}, _b[Reducer._name] = initial, _b)),
-            };
-        }, { reducers: {}, initialState: {} }), reducers = _a.reducers, initialState = _a.initialState;
-        this.reducerManager = new ReducerManager(__assign({ form: form }, reducers));
-        this.store = createStore(this.reducerManager.reduce, initialState, this.middleware);
-        return this.store;
-    };
     ReduxStore.prototype.unregisterReducer = function (Reducer) {
         this.store.replaceReducer(this.reducerManager.remove(isString(Reducer) ? Reducer : Reducer._name));
     };
@@ -111,12 +112,21 @@ var ReduxStore = /** @class */ (function () {
 }());
 var storage = new ReduxStore();
 var store = storage.store;
+var connectReducers = storage.connectReducers;
+var dispatch = storage.dispatch;
+var getState = storage.getState;
+var registerReducer = storage.registerReducer;
+var unregisterReducer = storage.unregisterReducer;
+export var ssr = function (data) {
+    var storage = new ReduxStore(data);
+    store = storage.store;
+    connectReducers = storage.connectReducers;
+    dispatch = storage.dispatch;
+    getState = storage.getState;
+    registerReducer = storage.registerReducer;
+    unregisterReducer = storage.unregisterReducer;
+};
 export default store;
-export var connectReducers = storage.connectReducers;
-export var dispatch = storage.dispatch;
-export var getState = storage.getState;
-export var registerReducer = storage.registerReducer;
-export var ssr = storage.ssr;
-export var unregisterReducer = storage.unregisterReducer;
+export { connectReducers, dispatch, getState, registerReducer, unregisterReducer };
 export { Reducer, types };
 //# sourceMappingURL=index.js.map

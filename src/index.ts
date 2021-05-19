@@ -15,15 +15,34 @@ class ReduxStore {
     : composeWithDevTools(applyMiddleware(thunkMiddleware));
   storage: Store;
 
-  constructor() {
+  constructor(data: any[] = []) {
     this.connectReducers   = this.connectReducers.bind(this);
     this.getState          = this.getState.bind(this);
     this.registerReducer   = this.registerReducer.bind(this);
-    this.ssr               = this.ssr.bind(this);
     this.unregisterReducer = this.unregisterReducer.bind(this);
 
-    this.reducerManager = new ReducerManager({form});
-    this.store          = createStore(this.reducerManager.reduce, this.middleware);
+    if (data.length > 0) {
+      const {reducers, initialState} = data.reduce((accumulator, currentValue) => {
+        const [Reducer, initial] = currentValue;
+
+        return {
+          reducers:     {
+            ...accumulator.reducers,
+            [Reducer._name]: new Reducer().init(),
+          },
+          initialState: {
+            ...accumulator.initialState,
+            [Reducer._name]: initial,
+          },
+        };
+      }, {reducers: {}, initialState: {}});
+
+      this.reducerManager = new ReducerManager({form, ...reducers});
+      this.store          = createStore(this.reducerManager.reduce, initialState, this.middleware);
+    } else {
+      this.reducerManager = new ReducerManager({form});
+      this.store          = createStore(this.reducerManager.reduce, this.middleware);
+    }
   }
 
   get dispatch() {
@@ -83,28 +102,6 @@ class ReduxStore {
     this.store.replaceReducer(this.reducerManager.add(Reducer._name, new Reducer().init()));
   }
 
-  ssr(data: any[]) {
-    const {reducers, initialState} = data.reduce((accumulator, currentValue) => {
-      const [Reducer, initial] = currentValue;
-
-      return {
-        reducers:     {
-          ...accumulator.reducers,
-          [Reducer._name]: new Reducer().init(),
-        },
-        initialState: {
-          ...accumulator.initialState,
-          [Reducer._name]: initial,
-        },
-      };
-    }, {reducers: {}, initialState: {}});
-
-    this.reducerManager = new ReducerManager({form, ...reducers});
-    this.store          = createStore(this.reducerManager.reduce, initialState, this.middleware);
-
-    return this.store;
-  }
-
   unregisterReducer(Reducer) {
     this.store.replaceReducer(this.reducerManager.remove(isString(Reducer) ? Reducer : Reducer._name));
   }
@@ -112,14 +109,24 @@ class ReduxStore {
 
 const storage = new ReduxStore();
 
-let store = storage.store;
+let store             = storage.store;
+let connectReducers   = storage.connectReducers;
+let dispatch          = storage.dispatch;
+let getState          = storage.getState;
+let registerReducer   = storage.registerReducer;
+let unregisterReducer = storage.unregisterReducer;
+
+export const ssr = (data: any[]) => {
+  const storage = new ReduxStore(data);
+
+  store             = storage.store;
+  connectReducers   = storage.connectReducers;
+  dispatch          = storage.dispatch;
+  getState          = storage.getState;
+  registerReducer   = storage.registerReducer;
+  unregisterReducer = storage.unregisterReducer;
+};
 
 export default store;
-export let connectReducers   = storage.connectReducers;
-export let dispatch          = storage.dispatch;
-export let getState          = storage.getState;
-export let registerReducer   = storage.registerReducer;
-export let ssr               = storage.ssr;
-export let unregisterReducer = storage.unregisterReducer;
-
+export { connectReducers, dispatch, getState, registerReducer, unregisterReducer };
 export { Reducer, types };
