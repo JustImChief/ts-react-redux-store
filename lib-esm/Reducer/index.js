@@ -9,6 +9,17 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 import DataTransformer from 'ts-data-transformer';
 import DataValidator from 'ts-data-validator';
 var types = {
@@ -20,8 +31,8 @@ var types = {
 };
 var Reducer = /** @class */ (function () {
     function Reducer(initialState) {
+        var _a;
         if (initialState === void 0) { initialState = {}; }
-        this.actions = {};
         this.DT = DataTransformer;
         this.DV = DataValidator;
         this.initialData = {};
@@ -31,6 +42,9 @@ var Reducer = /** @class */ (function () {
             loading: false,
             wait: false,
         };
+        this.actions = (_a = {},
+            _a["@" + Reducer._name + "/SSR_INITIALIZE"] = this.ssrInit.bind(this),
+            _a);
         this.initialData = (initialState === null || initialState === void 0 ? void 0 : initialState.data) || {};
         this.initialValues = (initialState === null || initialState === void 0 ? void 0 : initialState.values) || {};
         this.init = this.init.bind(this);
@@ -120,10 +134,9 @@ var Reducer = /** @class */ (function () {
         if (wait === void 0) { wait = false; }
         return __assign(__assign({}, state), (_a = {}, _a[wait ? 'wait' : 'loading'] = true, _a));
     };
-    Reducer.prototype.ssrInit = function (initial) {
-        if (initial === void 0) { initial = {}; }
-        this.initialState = __assign(__assign({}, this.initialState), initial);
-        return this.init();
+    Reducer.prototype.ssrInit = function (state, action) {
+        var type = action.type, ssr = __rest(action, ["type"]);
+        return __assign(__assign({}, state), ssr);
     };
     Reducer.prototype.success = function (state, action, wait) {
         var _a;
