@@ -109,8 +109,14 @@ var ReduxStore = /** @class */ (function () {
     };
     return ReduxStore;
 }());
-var _a = new ReduxStore(), connectReducers = _a.connectReducers, dispatch = _a.dispatch, getState = _a.getState, registerReducer = _a.registerReducer, store = _a.store, ssr = _a.ssr, unregisterReducer = _a.unregisterReducer;
+var storage = new ReduxStore();
+var store = storage.store;
 export default store;
-export { connectReducers, dispatch, getState, registerReducer, ssr, unregisterReducer };
+export var connectReducers = storage.connectReducers;
+export var dispatch = storage.dispatch;
+export var getState = storage.getState;
+export var registerReducer = storage.registerReducer;
+export var ssr = storage.ssr;
+export var unregisterReducer = storage.unregisterReducer;
 export { Reducer, types };
 //# sourceMappingURL=index.js.map

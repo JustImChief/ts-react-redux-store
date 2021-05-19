@@ -110,8 +110,16 @@ class ReduxStore {
   }
 }
 
-const {connectReducers, dispatch, getState, registerReducer, store, ssr, unregisterReducer} = new ReduxStore();
+const storage = new ReduxStore();
+
+let store = storage.store;
 
 export default store;
-export { connectReducers, dispatch, getState, registerReducer, ssr, unregisterReducer };
+export let connectReducers   = storage.connectReducers;
+export let dispatch          = storage.dispatch;
+export let getState          = storage.getState;
+export let registerReducer   = storage.registerReducer;
+export let ssr               = storage.ssr;
+export let unregisterReducer = storage.unregisterReducer;
+
 export { Reducer, types };
