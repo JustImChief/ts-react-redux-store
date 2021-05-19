@@ -33,7 +33,6 @@ var Reducer = /** @class */ (function () {
     function Reducer(initialState) {
         var _a;
         if (initialState === void 0) { initialState = {}; }
-        this.name = 'abstract';
         this.DT = DataTransformer;
         this.DV = DataValidator;
         this.initialData = {};
@@ -44,7 +43,7 @@ var Reducer = /** @class */ (function () {
             wait: false,
         };
         this.actions = (_a = {},
-            _a["@@SSR/" + Reducer.reducerName] = this.ssrInit.bind(this),
+            _a["@@SSR/" + this.constructor['_name']] = this.ssrInit.bind(this),
             _a);
         this.initialData = (initialState === null || initialState === void 0 ? void 0 : initialState.data) || {};
         this.initialValues = (initialState === null || initialState === void 0 ? void 0 : initialState.values) || {};
@@ -59,16 +58,9 @@ var Reducer = /** @class */ (function () {
         this.initialState = __assign(__assign({}, this.initialState), { data: this.prepareValues(this.initialData), values: this.prepareValues(this.initialValues) });
         this.init();
     }
-    Object.defineProperty(Reducer, "reducerName", {
-        get: function () {
-            return this._name;
-        },
-        enumerable: false,
-        configurable: true
-    });
     Object.defineProperty(Reducer, "initialState", {
         get: function () {
-            return new Reducer().initialState;
+            return new this().initialState;
         },
         enumerable: false,
         configurable: true
@@ -151,6 +143,7 @@ var Reducer = /** @class */ (function () {
         if (wait === void 0) { wait = false; }
         return __assign(__assign({}, state), (_a = {}, _a[wait ? 'wait' : 'loading'] = false, _a));
     };
+    Reducer._name = 'abstract';
     return Reducer;
 }());
 export default Reducer;

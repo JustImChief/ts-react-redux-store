@@ -8,7 +8,6 @@ declare const types: {
 };
 declare class Reducer {
     static _name: string;
-    private static get reducerName();
     static get initialState(): InitialStateType & {
         initialStateLoaded?: boolean;
         loading?: boolean;
@@ -18,7 +17,6 @@ declare class Reducer {
         loading?: boolean;
         wait?: boolean;
     };
-    name: string;
     actions: {
         [p: string]: (state: CombinedState<{}>, action: AnyAction) => CombinedState<{}>;
     };
