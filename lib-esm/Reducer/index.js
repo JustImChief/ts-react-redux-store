@@ -33,6 +33,7 @@ var Reducer = /** @class */ (function () {
     function Reducer(initialState) {
         var _a;
         if (initialState === void 0) { initialState = {}; }
+        this.name = 'abstract';
         this.DT = DataTransformer;
         this.DV = DataValidator;
         this.initialData = {};
@@ -58,6 +59,13 @@ var Reducer = /** @class */ (function () {
         this.initialState = __assign(__assign({}, this.initialState), { data: this.prepareValues(this.initialData), values: this.prepareValues(this.initialValues) });
         this.init();
     }
+    Object.defineProperty(Reducer, "_name", {
+        get: function () {
+            return new Reducer().name;
+        },
+        enumerable: false,
+        configurable: true
+    });
     Object.defineProperty(Reducer, "initialState", {
         get: function () {
             return new Reducer().initialState;
@@ -143,7 +151,6 @@ var Reducer = /** @class */ (function () {
         if (wait === void 0) { wait = false; }
         return __assign(__assign({}, state), (_a = {}, _a[wait ? 'wait' : 'loading'] = false, _a));
     };
-    Reducer._name = 'abstract';
     return Reducer;
 }());
 export default Reducer;

@@ -7,7 +7,8 @@ declare const types: {
     string: string;
 };
 declare class Reducer {
-    static _name: string;
+    name: string;
+    static get _name(): string;
     static get initialState(): InitialStateType & {
         initialStateLoaded?: boolean;
         loading?: boolean;

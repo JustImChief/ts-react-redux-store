@@ -11,7 +11,11 @@ const types = {
 };
 
 class Reducer {
-  static _name = 'abstract';
+  name = 'abstract';
+
+  static get _name() {
+    return new Reducer().name;
+  }
 
   static get initialState() {
     return new Reducer().initialState;
